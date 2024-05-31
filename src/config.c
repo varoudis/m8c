@@ -56,10 +56,10 @@ config_params_s init_config() {
   c.gamepad_left = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
   c.gamepad_down = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
   c.gamepad_right = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
-  c.gamepad_select = SDL_CONTROLLER_BUTTON_BACK;
-  c.gamepad_start = SDL_CONTROLLER_BUTTON_A;
-  c.gamepad_opt = SDL_CONTROLLER_BUTTON_Y;
-  c.gamepad_edit = SDL_CONTROLLER_BUTTON_B;
+  c.gamepad_select = SDL_CONTROLLER_BUTTON_Y;
+  c.gamepad_start = SDL_CONTROLLER_BUTTON_B;
+  c.gamepad_opt = SDL_CONTROLLER_BUTTON_X;
+  c.gamepad_edit = SDL_CONTROLLER_BUTTON_A;
   c.gamepad_quit = SDL_CONTROLLER_BUTTON_RIGHTSTICK;
   c.gamepad_reset = SDL_CONTROLLER_BUTTON_LEFTSTICK;
 

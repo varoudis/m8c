@@ -57,7 +57,7 @@ config_params_s init_config() {
   c.gamepad_down = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
   c.gamepad_right = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
   c.gamepad_select = SDL_CONTROLLER_BUTTON_BACK;
-  c.gamepad_start = SDL_CONTROLLER_BUTTON_START;
+  c.gamepad_start = SDL_CONTROLLER_BUTTON_A;
   c.gamepad_opt = SDL_CONTROLLER_BUTTON_Y;
   c.gamepad_edit = SDL_CONTROLLER_BUTTON_B;
   c.gamepad_quit = SDL_CONTROLLER_BUTTON_RIGHTSTICK;
@@ -67,9 +67,9 @@ config_params_s init_config() {
   c.gamepad_analog_invert = 0;
   c.gamepad_analog_axis_updown = SDL_CONTROLLER_AXIS_LEFTY;
   c.gamepad_analog_axis_leftright = SDL_CONTROLLER_AXIS_LEFTX;
-  c.gamepad_analog_axis_start = SDL_CONTROLLER_AXIS_TRIGGERRIGHT;
+  c.gamepad_analog_axis_start = SDL_CONTROLLER_AXIS_INVALID;
   c.gamepad_analog_axis_select = SDL_CONTROLLER_AXIS_TRIGGERLEFT;
-  c.gamepad_analog_axis_opt = SDL_CONTROLLER_AXIS_INVALID;
+  c.gamepad_analog_axis_opt = SDL_CONTROLLER_AXIS_TRIGGERRIGHT;
   c.gamepad_analog_axis_edit = SDL_CONTROLLER_AXIS_INVALID;
 
   return c;

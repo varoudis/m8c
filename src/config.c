@@ -201,6 +201,7 @@ void write_config(config_params_s *conf) {
   }
 }
 
+
 // Read config
 void read_config(config_params_s *conf) {
 
@@ -345,8 +346,6 @@ void read_key_config(ini_t *ini, config_params_s *conf) {
 }
 
 void read_gamepad_config(ini_t *ini, config_params_s *conf) {
-  // TODO: Some form of validation
-
   const char *gamepad_up = ini_get(ini, "gamepad", "gamepad_up");
   const char *gamepad_left = ini_get(ini, "gamepad", "gamepad_left");
   const char *gamepad_down = ini_get(ini, "gamepad", "gamepad_down");
@@ -357,22 +356,14 @@ void read_gamepad_config(ini_t *ini, config_params_s *conf) {
   const char *gamepad_edit = ini_get(ini, "gamepad", "gamepad_edit");
   const char *gamepad_quit = ini_get(ini, "gamepad", "gamepad_quit");
   const char *gamepad_reset = ini_get(ini, "gamepad", "gamepad_reset");
-  const char *gamepad_analog_threshold =
-          ini_get(ini, "gamepad", "gamepad_analog_threshold");
-  const char *gamepad_analog_invert =
-          ini_get(ini, "gamepad", "gamepad_analog_invert");
-  const char *gamepad_analog_axis_updown =
-          ini_get(ini, "gamepad", "gamepad_analog_axis_updown");
-  const char *gamepad_analog_axis_leftright =
-          ini_get(ini, "gamepad", "gamepad_analog_axis_leftright");
-  const char *gamepad_analog_axis_select =
-          ini_get(ini, "gamepad", "gamepad_analog_axis_select");
-  const char *gamepad_analog_axis_start =
-          ini_get(ini, "gamepad", "gamepad_analog_axis_start");
-  const char *gamepad_analog_axis_opt =
-          ini_get(ini, "gamepad", "gamepad_analog_axis_opt");
-  const char *gamepad_analog_axis_edit =
-          ini_get(ini, "gamepad", "gamepad_analog_axis_edit");
+  const char *gamepad_analog_threshold = ini_get(ini, "gamepad", "gamepad_analog_threshold");
+  const char *gamepad_analog_invert = ini_get(ini, "gamepad", "gamepad_analog_invert");
+  const char *gamepad_analog_axis_updown = ini_get(ini, "gamepad", "gamepad_analog_axis_updown");
+  const char *gamepad_analog_axis_leftright = ini_get(ini, "gamepad", "gamepad_analog_axis_leftright");
+  const char *gamepad_analog_axis_select = ini_get(ini, "gamepad", "gamepad_analog_axis_select");
+  const char *gamepad_analog_axis_start = ini_get(ini, "gamepad", "gamepad_analog_axis_start");
+  const char *gamepad_analog_axis_opt = ini_get(ini, "gamepad", "gamepad_analog_axis_opt");
+  const char *gamepad_analog_axis_edit = ini_get(ini, "gamepad", "gamepad_analog_axis_edit");
 
   if (gamepad_up)
     conf->gamepad_up = SDL_atoi(gamepad_up);
@@ -397,7 +388,7 @@ void read_gamepad_config(ini_t *ini, config_params_s *conf) {
   if (gamepad_analog_threshold)
     conf->gamepad_analog_threshold = SDL_atoi(gamepad_analog_threshold);
 
-  if (strcmpci(gamepad_analog_invert, "true") == 0)
+  if (gamepad_analog_invert && strcmpci(gamepad_analog_invert, "true") == 0)
     conf->gamepad_analog_invert = 1;
   else
     conf->gamepad_analog_invert = 0;
@@ -405,8 +396,7 @@ void read_gamepad_config(ini_t *ini, config_params_s *conf) {
   if (gamepad_analog_axis_updown)
     conf->gamepad_analog_axis_updown = SDL_atoi(gamepad_analog_axis_updown);
   if (gamepad_analog_axis_leftright)
-    conf->gamepad_analog_axis_leftright =
-            SDL_atoi(gamepad_analog_axis_leftright);
+    conf->gamepad_analog_axis_leftright = SDL_atoi(gamepad_analog_axis_leftright);
   if (gamepad_analog_axis_select)
     conf->gamepad_analog_axis_select = SDL_atoi(gamepad_analog_axis_select);
   if (gamepad_analog_axis_start)

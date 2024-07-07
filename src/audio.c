@@ -8,11 +8,25 @@
 static SDL_AudioDeviceID devid_in = 0;
 static SDL_AudioDeviceID devid_out = 0;
 
+static unsigned int audio_paused = 0;
+static unsigned int audio_initialized = 0;
+
+void toggle_audio(unsigned int audio_buffer_size, const char *output_device_name) {
+  if (!audio_initialized) {
+    audio_init(audio_buffer_size, output_device_name);
+    return;
+  }
+  audio_paused = !audio_paused;
+  SDL_PauseAudioDevice(devid_in, audio_paused);
+  SDL_PauseAudioDevice(devid_out, audio_paused);
+  SDL_Log(audio_paused ? "Audio paused" : "Audio resumed");
+}
+
 void audio_cb_in(void *userdata, uint8_t *stream, int len) {
   SDL_QueueAudio(devid_out, stream, len);
 }
 
-int audio_init(int audio_buffer_size, const char* output_device_name) {
+int audio_init(unsigned int audio_buffer_size, const char *output_device_name) {
 
   int i = 0;
   int m8_device_id = -1;
@@ -31,8 +45,7 @@ int audio_init(int audio_buffer_size, const char* output_device_name) {
       // Check if input device exists before doing anything else
       SDL_LogDebug(SDL_LOG_CATEGORY_AUDIO, "%s", SDL_GetAudioDeviceName(i, SDL_TRUE));
       if (SDL_strstr(SDL_GetAudioDeviceName(i, SDL_TRUE), "M8") != NULL) {
-        SDL_Log("M8 Audio Input device found: %s",
-                SDL_GetAudioDeviceName(i, SDL_TRUE));
+        SDL_Log("M8 Audio Input device found: %s", SDL_GetAudioDeviceName(i, SDL_TRUE));
         m8_device_id = i;
       }
     }
@@ -63,9 +76,8 @@ int audio_init(int audio_buffer_size, const char* output_device_name) {
     want_in.channels = 2;
     want_in.samples = audio_buffer_size;
     want_in.callback = audio_cb_in;
-    devid_in = SDL_OpenAudioDevice(
-        SDL_GetAudioDeviceName(m8_device_id, SDL_TRUE), SDL_TRUE, &want_in,
-        &have_in, SDL_AUDIO_ALLOW_ANY_CHANGE);
+    devid_in = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(m8_device_id, SDL_TRUE), SDL_TRUE,
+                                   &want_in, &have_in, SDL_AUDIO_ALLOW_ANY_CHANGE);
     if (devid_in == 0) {
       SDL_Log("Failed to open M8 audio device, SDL Error: %s", SDL_GetError());
       return 0;
@@ -77,14 +89,22 @@ int audio_init(int audio_buffer_size, const char* output_device_name) {
   SDL_PauseAudioDevice(devid_in, 0);
   SDL_PauseAudioDevice(devid_out, 0);
 
+  audio_paused = 0;
+  audio_initialized = 1;
+
   return 1;
 }
 
 void audio_destroy() {
+  if (!audio_initialized)
+    return;
   SDL_Log("Closing audio devices");
   SDL_PauseAudioDevice(devid_in, 1);
   SDL_PauseAudioDevice(devid_out, 1);
   SDL_CloseAudioDevice(devid_in);
   SDL_CloseAudioDevice(devid_out);
+
+  audio_initialized = 0;
 }
+
 #endif

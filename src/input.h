@@ -4,30 +4,27 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-#include <stdint.h>
 #include "config.h"
+#include <stdint.h>
 
 typedef enum input_buttons_t {
-    INPUT_UP,
-    INPUT_DOWN,
-    INPUT_LEFT,
-    INPUT_RIGHT,
-    INPUT_OPT,
-    INPUT_EDIT,
-    INPUT_SELECT,
-    INPUT_START,
-    INPUT_MAX
+  INPUT_UP,
+  INPUT_DOWN,
+  INPUT_LEFT,
+  INPUT_RIGHT,
+  INPUT_OPT,
+  INPUT_EDIT,
+  INPUT_SELECT,
+  INPUT_START,
+  INPUT_MAX
 } input_buttons_t;
 
-typedef enum input_type_t {
-  normal,
-  keyjazz,
-  special
-} input_type_t;
+typedef enum input_type_t { normal, keyjazz, special } input_type_t;
 
 typedef enum special_messages_t {
   msg_quit = 1,
-  msg_reset_display = 2
+  msg_reset_display = 2,
+  msg_toggle_audio = 3
 } special_messages_t;
 
 typedef struct input_msg_s {
